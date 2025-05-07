@@ -38,6 +38,7 @@ function App() {
       } catch (err) {
         setError(err.message);
         setLoading(false);
+        console.error('Error al obtener tareas:', err);
       }
     };
     fetchTasks();
@@ -47,21 +48,23 @@ function App() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (!newTask.trim()) return;
-
+  
     const newTaskData = {
       title: newTask,
       completed: false,
       location: lat && lng ? { lat: parseFloat(lat), lng: parseFloat(lng) } : null,
     };
-
+  
     try {
-      const response = await axios.post(apiUrl, newTaskData);
-      setTasks([...tasks, response.data]);
+      await axios.post(apiUrl, newTaskData);
+      const response = await axios.get(apiUrl); // Refresca las tareas
+      setTasks(response.data);
       setNewTask('');
       setLat('');
       setLng('');
     } catch (err) {
       setError(err.message);
+      console.error('Error al crear tarea:', err);
     }
   };
 
