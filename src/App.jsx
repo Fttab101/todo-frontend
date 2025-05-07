@@ -25,7 +25,7 @@ function App() {
   const [lng, setLng] = useState('');
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-
+  // URL de la API
   const apiUrl = 'https://todo-backend-qx2x.onrender.com/tasks';
 
   // Obtener tareas
